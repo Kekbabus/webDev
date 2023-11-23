@@ -60,7 +60,7 @@ export default function Page() {
     console.log("Sent pass:" + pass);
 
     runDBCallAsync(
-      `http://localhost:3000/api/login?email=${email}&pass=${pass}`
+      `api/login?email=${email}&pass=${pass}`
     );
   }; // end handler
 

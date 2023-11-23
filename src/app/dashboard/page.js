@@ -20,7 +20,7 @@ export default function Page() {
   function putInCart(pname, price, username = sessionStorage.getItem("Login")) {
     console.log("putting in cart: " + pname + ", " + username + ", " + price);
     fetch(
-      "http://localhost:3000/api/putInCart?pname=" +
+      "api/putInCart?pname=" +
         pname +
         "&username=" +
         username +
@@ -31,12 +31,12 @@ export default function Page() {
   const [data, setData] = useState(null);
   const [weather, setWeatherData] = useState(0);
   useEffect(() => {
-    fetch("http://localhost:3000/api/getProducts")
+    fetch("api/getProducts")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
       });
-    fetch("http://localhost:3000/api/getWeather")
+    fetch("api/getWeather")
       .then((res) => res.json())
       .then((weather) => {
         setWeatherData(weather);

@@ -16,13 +16,13 @@ import { createTheme } from "@mui/material/styles";
 import { green, purple } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 export default function Page() {
-  function removeFromCart(pname) {
+  function removeFromCart(pname, price) {
     console.log("Current cart:" + pname + price);
-    fetch("http://localhost:3000/api/getFromCart?pname=?" + pname)+ "&price=?"+price;
+    fetch("api/getFromCart?pname=?" + pname+ "&price=?"+price);
   }
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:3000/api/getFromCart")
+    fetch("api/getFromCart")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
