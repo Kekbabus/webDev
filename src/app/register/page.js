@@ -17,7 +17,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import { green, purple } from "@mui/material/colors";
 
-export default function Page() {
+export default function Register() {
   /*
     This function does the actual work
     calling the fetch to get things from the database.
@@ -27,17 +27,10 @@ export default function Page() {
     const res = await fetch(url);
     const data = await res.json();
 
-
-
-    console.log("----->");
-    console.log(data.data);
     if (data.data == "valid") {
       console.log("login is valid!");
-       window.location.href = "/dashboard"
-       
-
     } else {
-       console.log("not valid  ")
+      console.log("not valid  ");
     }
   }
 
@@ -52,15 +45,23 @@ export default function Page() {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-
+    let username = data.get("username");
     let email = data.get("email");
+    let reEmail = data.get("reEmail");
     let pass = data.get("pass");
-
+    let address = data.get("address");
+    let telephone = data.get("telephone");
+    let dob = data.get("dob");
+    console.log("Sent username:" + username);
     console.log("Sent email:" + email);
+    console.log("Sent reEmail:" + reEmail);
     console.log("Sent pass:" + pass);
+    console.log("Sent address:" + address);
+    console.log("Sent telephone:" + telephone);
+    console.log("Sent date of birth" + dob);
 
     runDBCallAsync(
-      `http://localhost:3000/api/login?email=${email}&pass=${pass}`
+      `http://localhost:3000/api/register?username=${username}&email=${email}&reEmail=${reEmail}&pass=${pass}&address=${address}&telephone=${telephone}`
     );
   }; // end handler
 
@@ -86,7 +87,7 @@ export default function Page() {
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>{" "}
           <Typography component="h1" variant="h5">
-            Sign in
+            Register{" "}
           </Typography>{" "}
           <Box
             component="form"
@@ -94,6 +95,16 @@ export default function Page() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
             <TextField
               margin="normal"
               required
@@ -108,11 +119,52 @@ export default function Page() {
               margin="normal"
               required
               fullWidth
+              id="reEmail"
+              label="Re-enter Email address"
+              name="reEmail"
+              autoComplete="reEmail"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               name="pass"
               label="Pass"
               type="pass"
               id="pass"
               autoComplete="current-password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="address"
+              label="Address"
+              name="address"
+              autoComplete="address"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="telephone"
+              label="Telephone Number"
+              name="telephone"
+              autoComplete="telephone"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="dob"
+              label="Date of Birth"
+              name="dob"
+              type="text"
+              autoComplete=""
+              autoFocus
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -124,7 +176,7 @@ export default function Page() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In{" "}
+              Register{" "}
             </Button>
             <Grid container>
               <Grid item xs>
@@ -133,9 +185,9 @@ export default function Page() {
                 </Link>{" "}
               </Grid>{" "}
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link href="../" variant="body2">
                   {" "}
-                  {"Don't have an account? Sign Up"}{" "}
+                  {"Have an account? Sign in"}{" "}
                 </Link>{" "}
               </Grid>{" "}
             </Grid>{" "}
