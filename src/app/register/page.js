@@ -61,7 +61,7 @@ export default function Register() {
     console.log("Sent date of birth" + dob);
 
     runDBCallAsync(
-      `http://localhost:3000/api/register?username=${username}&email=${email}&reEmail=${reEmail}&pass=${pass}&address=${address}&telephone=${telephone}`
+      `api/register?username=${username}&email=${email}&reEmail=${reEmail}&pass=${pass}&address=${address}&telephone=${telephone}`
     );
   }; // end handler
 
