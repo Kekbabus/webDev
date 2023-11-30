@@ -38,6 +38,7 @@ export async function GET(req, res) {
             "telephone" : telephone,
             "dob" : dob
         }).toArray();
+        window.location.href ='dashboard'
         
     }
     //==========================================================
