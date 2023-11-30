@@ -46,22 +46,19 @@ export default function Register() {
 
     const data = new FormData(event.currentTarget);
     let username = data.get("username");
-    let email = data.get("email");
-    let reEmail = data.get("reEmail");
     let pass = data.get("pass");
     let address = data.get("address");
     let telephone = data.get("telephone");
     let dob = data.get("dob");
     console.log("Sent username:" + username);
-    console.log("Sent email:" + email);
-    console.log("Sent reEmail:" + reEmail);
+
     console.log("Sent pass:" + pass);
     console.log("Sent address:" + address);
     console.log("Sent telephone:" + telephone);
     console.log("Sent date of birth" + dob);
 
     runDBCallAsync(
-      `api/register?username=${username}&email=${email}&reEmail=${reEmail}&pass=${pass}&address=${address}&telephone=${telephone}`
+      `api/register?username=${username}&pass=${pass}&address=${address}&telephone=${telephone}`
     );
   }; // end handler
 
@@ -103,26 +100,6 @@ export default function Register() {
               label="Username"
               name="username"
               autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="reEmail"
-              label="Re-enter Email address"
-              name="reEmail"
-              autoComplete="reEmail"
               autoFocus
             />
             <TextField
