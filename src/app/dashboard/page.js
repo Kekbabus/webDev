@@ -17,13 +17,11 @@ import { green, purple } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 
 export default function Page() {
-  function putInCart(pname, price, username = sessionStorage.getItem("Login")) {
-    console.log("putting in cart: " + pname + ", " + username + ", " + price);
+  function putInCart(pname, price) {
+    console.log("putting in cart: " + pname + ", " + price);
     fetch(
       "api/putInCart?pname=" +
         pname +
-        "&username=" +
-        username +
         "&price=" +
         price
     );

@@ -20,7 +20,7 @@ await client.connect();
 console.log('Connected successfully to server');
 const db = client.db(dbName);
 const collection = db.collection('shopping_cart'); // collection name
-var myobj = { pname: pname, username: username, price: price};
+var myobj = { pname: pname, price: price};
 const insertResult = await collection.insertOne(myobj);
 //==========================================================
 // at the end of the process we need to send something back.
