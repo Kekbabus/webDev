@@ -3,15 +3,9 @@ export async function GET(req, res) {
     // the api. This goes to the console.
     console.log("in the api page")
         // =================================================
-        const { MongoClient, ServerApiVersion } = require('mongodb');
-    const url = 'mongodb+srv://b00148239:<qwerty123>@assignment1.hgyc18w.mongodb.net/?retryWrites=true&w=majority';
-    const client = new MongoClient(uri, {
-        serverApi: {
-          version: ServerApiVersion.v1,
-          strict: true,
-          deprecationErrors: true,
-        }
-      });
+    const { MongoClient } = require('mongodb');
+    const url = 'mongodb+srv://b00148239:qwerty123@assignment1.hgyc18w.mongodb.net/?retryWrites=true&w=majority';
+    const client = new MongoClient(url);
     const dbName = 'app'; // database name
     await client.connect();
     console.log('Connected successfully to server');
