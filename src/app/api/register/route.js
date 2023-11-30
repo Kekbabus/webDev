@@ -38,7 +38,7 @@ export async function GET(req, res) {
             "telephone" : telephone,
             "dob" : dob
         }).toArray();
-        window.location.href ='dashboard'
+        
         
     }
     //==========================================================
@@ -51,18 +51,5 @@ export async function GET(req, res) {
         //window.location.href = "/dashboard"
     return Response.json({"data": "valid", username})
     }
-    console.log(username);
-    console.log(email);
-    console.log(reEmail);
-    console.log(pass);
-    console.log(address);
-    console.log(telephone);
-    console.log(dob);
 
-
-
-    // database call goes here
-
-    // at the end of the process we need to send something back.
-    return Response.json({ "data": "valid" })
 }

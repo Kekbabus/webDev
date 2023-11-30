@@ -29,8 +29,11 @@ export default function Register() {
 
     if (data.data == "valid") {
       console.log("login is valid!");
+       window.location.href = "app"
+       
+
     } else {
-      console.log("not valid  ");
+       console.log("not valid  ")
     }
   }
 
