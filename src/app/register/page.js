@@ -29,7 +29,7 @@ export default function Register() {
 
     if (data.data == "valid") {
       console.log("login is valid!");
-       window.location.href = "app"
+       
        
 
     } else {
