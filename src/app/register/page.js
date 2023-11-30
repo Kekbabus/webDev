@@ -58,7 +58,7 @@ export default function Register() {
     console.log("Sent date of birth" + dob);
 
     runDBCallAsync(
-      `api/register?username=${username}&pass=${pass}&address=${address}&telephone=${telephone}`
+      `api/register?username=${username}&pass=${pass}&address=${address}&telephone=${telephone}&dob=${dob}`
     );
   }; // end handler
 
@@ -139,8 +139,8 @@ export default function Register() {
               id="dob"
               label="Date of Birth"
               name="dob"
-              type="text"
-              autoComplete=""
+              type="date"
+              autoComplete="dob"
               autoFocus
             />
             <FormControlLabel
