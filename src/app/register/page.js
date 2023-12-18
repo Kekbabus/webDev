@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -19,9 +20,11 @@ import { green, purple } from "@mui/material/colors";
 
 export default function Register() {
   /*
-    This function does the actual work
-    calling the fetch to get things from the database.
-    */
+        This function does the actual work
+        calling the fetch to get things from the database.
+        */
+
+  var validator = require("email-validator");
 
   async function runDBCallAsync(url) {
     const res = await fetch(url);
@@ -29,19 +32,16 @@ export default function Register() {
 
     if (data.data == "valid") {
       console.log("login is valid!");
-       
-       
-
     } else {
-       console.log("not valid  ")
+      console.log("not valid  ");
     }
   }
 
   /*
 
-    When the button is clicked, this is the event that is fired.
-    The first thing we need to do is prevent the default refresh of the page.
-    */
+        When the button is clicked, this is the event that is fired.
+        The first thing we need to do is prevent the default refresh of the page.
+        */
   const handleSubmit = (event) => {
     console.log("handling submit");
 
@@ -85,7 +85,7 @@ export default function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>{" "}
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}> </Avatar>{" "}
           <Typography component="h1" variant="h5">
             Register{" "}
           </Typography>{" "}
@@ -157,7 +157,7 @@ export default function Register() {
               sx={{ mt: 3, mb: 2 }}
             >
               Register{" "}
-            </Button>
+            </Button>{" "}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -172,8 +172,8 @@ export default function Register() {
               </Grid>{" "}
             </Grid>{" "}
           </Box>{" "}
-        </Box>
-      </Container>
+        </Box>{" "}
+      </Container>{" "}
     </ThemeProvider>
   );
 }

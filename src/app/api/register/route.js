@@ -16,6 +16,7 @@ export async function GET(req, res) {
     const dbName = 'app'; // database name
     await client.connect();
     console.log('Connected successfully to server');
+    var validator = require("email-validator");
     const db = client.db(dbName);
     const collection = db.collection('login'); // collection name
     
