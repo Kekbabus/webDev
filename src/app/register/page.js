@@ -43,7 +43,7 @@ export default function Register() {
     let errorMessage = "";
     const data = new FormData(event.currentTarget);
     // get the email
-    let email = data.get("email");
+    let email = data.get("username");
     // pull in the validator
     var validator = require("email-validator");
     // run the validator
