@@ -24,8 +24,6 @@ export default function Register() {
         calling the fetch to get things from the database.
         */
 
-  var validator = require("email-validator");
-
   async function runDBCallAsync(url) {
     const res = await fetch(url);
     const data = await res.json();
@@ -37,32 +35,60 @@ export default function Register() {
     }
   }
 
+  const validateForm = (event) => {
+    let errorMessage = "";
+    const data = new FormData(event.currentTarget);
+    // get the email
+    let email = data.get("email");
+    // pull in the validator
+    var validator = require("email-validator");
+    // run the validator
+    let emailCheck = validator.validate(email);
+    // print the status true or false
+    console.log("email status" + emailCheck);
+    // if it is false, add to the error message.
+    if (emailCheck == false) {
+      errorMessage += "Incorrect email";
+    }
+    return errorMessage;
+  };
+
   /*
 
         When the button is clicked, this is the event that is fired.
         The first thing we need to do is prevent the default refresh of the page.
         */
+
   const handleSubmit = (event) => {
     console.log("handling submit");
-
     event.preventDefault();
+    // call out custom validator
+    let errorMessage = validateForm(event);
+    // save the mesage
+    setErrorHolder(errorMessage);
+    // if we have an error
+    if (errorMessage.length > 0) {
+      setOpen(true);
+    } else {
+      // if we do not get an error
+      const data = new FormData(event.currentTarget);
+      let username = data.get("username");
+      let pass = data.get("pass");
+      let address = data.get("address");
+      let telephone = data.get("telephone");
+      let dob = data.get("dob");
+      console.log("Sent username:" + username);
+      console.log("Sent pass:" + pass);
+      console.log("Sent address:" + address);
+      console.log("Sent telephone:" + telephone);
+      console.log("Sent date of birth" + dob);
 
-    const data = new FormData(event.currentTarget);
-    let username = data.get("username");
-    let pass = data.get("pass");
-    let address = data.get("address");
-    let telephone = data.get("telephone");
-    let dob = data.get("dob");
-    console.log("Sent username:" + username);
+      //calling db
 
-    console.log("Sent pass:" + pass);
-    console.log("Sent address:" + address);
-    console.log("Sent telephone:" + telephone);
-    console.log("Sent date of birth" + dob);
-
-    runDBCallAsync(
-      `api/register?username=${username}&pass=${pass}&address=${address}&telephone=${telephone}&dob=${dob}`
-    );
+      runDBCallAsync(
+        `api/register?username=${username}&pass=${pass}&address=${address}&telephone=${telephone}&dob=${dob}`
+      );
+    }
   }; // end handler
 
   const theme = createTheme({
@@ -72,6 +98,16 @@ export default function Register() {
       },
     },
   });
+  // first
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // second
+  const [errorHolder, setErrorHolder] = React.useState(false);
 
   return (
     <ThemeProvider theme={theme}>
