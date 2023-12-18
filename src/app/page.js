@@ -27,20 +27,39 @@ export default function Page() {
     const res = await fetch(url);
     const data = await res.json();
 
-
-
     console.log("----->");
     console.log(data.data);
     if (data.data == "valid") {
       console.log("login is valid!");
-       window.location.href = "/dashboard"
-       
-
+      window.location.href = "/dashboard";
     } else {
-       console.log("not valid  ")
+      console.log("not valid  ");
     }
   }
 
+  const validateForm = (event) => {
+    let errorMessage = "";
+    const data = new FormData(event.currentTarget);
+    // get the email
+    let email = data.get("email");
+    // pull in the validator
+    var validator = require("email-validator");
+    // run the validator
+    let emailCheck = validator.validate(email);
+    // print the status true or false
+    console.log("email status" + emailCheck);
+    // if it is false, add to the error message.
+    if (emailCheck == false) {
+      errorMessage += "Incorrect email";
+    }
+    // Validate the password
+    let pass = data.get("pass");
+    if (pass.length == 0) {
+      errorMessage += " No password added";
+    }
+
+    return errorMessage;
+  };
   /*
 
     When the button is clicked, this is the event that is fired.
@@ -48,20 +67,25 @@ export default function Page() {
     */
   const handleSubmit = (event) => {
     console.log("handling submit");
-
     event.preventDefault();
+    // call out custom validator
+    let errorMessage = validateForm(event);
+    // save the mesage
+    setErrorHolder(errorMessage);
+    // if we have an error
+    if (errorMessage.length > 0) {
+      setOpen(true);
+    } else {
+      const data = new FormData(event.currentTarget);
 
-    const data = new FormData(event.currentTarget);
+      let email = data.get("email");
+      let pass = data.get("pass");
 
-    let email = data.get("email");
-    let pass = data.get("pass");
+      console.log("Sent email:" + email);
+      console.log("Sent pass:" + pass);
 
-    console.log("Sent email:" + email);
-    console.log("Sent pass:" + pass);
-
-    runDBCallAsync(
-      `api/login?email=${email}&pass=${pass}`
-    );
+      runDBCallAsync(`api/login?email=${email}&pass=${pass}`);
+    }
   }; // end handler
 
   const theme = createTheme({
@@ -71,9 +95,39 @@ export default function Page() {
       },
     },
   });
+  // first
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // second
+  const [errorHolder, setErrorHolder] = React.useState(false);
 
   return (
     <ThemeProvider theme={theme}>
+      <React.Fragment>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {errorHolder}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

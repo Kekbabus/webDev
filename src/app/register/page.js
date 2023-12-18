@@ -54,6 +54,12 @@ export default function Register() {
     if (emailCheck == false) {
       errorMessage += "Incorrect email";
     }
+    // Validate the password
+    let pass = data.get("pass");
+    if (pass.length == 0) {
+      errorMessage += " No password added";
+    }
+
     return errorMessage;
   };
 
