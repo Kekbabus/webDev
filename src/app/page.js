@@ -64,11 +64,6 @@ export default function Page() {
     console.log("handling submit");
 
     event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-
-    let email = data.get("email");
-    let pass = data.get("pass");
     // call out custom validator
     let errorMessage = validateForm(event);
     // save the mesage
