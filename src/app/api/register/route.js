@@ -10,6 +10,9 @@ export async function GET(req, res) {
     const address = searchParams.get('address')
     const telephone = searchParams.get('telephone')
     const dob = searchParams.get('dob')
+    const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hash = bcrypt.hashSync(pass, saltRounds);
     const { MongoClient } = require('mongodb');
     const url = 'mongodb+srv://b00148239:qwerty123@assignment1.hgyc18w.mongodb.net/?retryWrites=true&w=majority';
     const client = new MongoClient(url);
@@ -20,8 +23,7 @@ export async function GET(req, res) {
     const collection = db.collection('login'); // collection name
     
     const findResult = await collection.find({
-        "username": username,
-        "pass" : pass
+        "username": username
     }).toArray();
     console.log('Found documents =>', findResult);
     let valid = false
@@ -33,7 +35,7 @@ export async function GET(req, res) {
         console.log("Account doesn't exist, creating account")
         const addResult = await collection.insertOne({
             "username" : username,
-            "pass" : pass,
+            "pass" : hash,
             "address" : address,
             "telephone" : telephone,
             "dob" : dob

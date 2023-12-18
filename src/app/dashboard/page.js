@@ -17,14 +17,18 @@ import { green, purple } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 
 export default function Page() {
+  fetch("api/checkAuth")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data.status);
+      if (data.status != "true") {
+        window.location = "/dashboard";
+      }
+    });
+
   function putInCart(pname, price) {
     console.log("putting in cart: " + pname + ", " + price);
-    fetch(
-      "api/putInCart?pname=" +
-        pname +
-        "&price=" +
-        price
-    );
+    fetch("api/putInCart?pname=" + pname + "&price=" + price);
   }
   const [data, setData] = useState(null);
   const [weather, setWeatherData] = useState(0);
@@ -48,7 +52,7 @@ export default function Page() {
       },
     },
   });
-  if (!weather) return <p>No weather</p>
+  if (!weather) return <p>No weather</p>;
   return (
     <ThemeProvider theme={theme}>
       Today's temperature: {JSON.stringify(weather.temp)}
