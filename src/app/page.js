@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -9,70 +8,54 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
-
 import { createTheme } from "@mui/material/styles";
-import { green, purple } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
+import validator from "email-validator"; // Import email-validator directly
 
 export default function Page() {
-  /*
-    This function does the actual work
-    calling the fetch to get things from the database.
-    */
+  const [open, setOpen] = React.useState(false);
+  const [errorHolder, setErrorHolder] = React.useState("");
 
-  async function runDBCallAsync(url) {
+  const runDBCallAsync = async (url) => {
     const res = await fetch(url);
     const data = await res.json();
 
     console.log("----->");
     console.log(data.data);
-    if (data.data == "valid") {
+    if (data.data === "valid") {
       console.log("login is valid!");
       window.location.href = "/dashboard";
     } else {
-      console.log("not valid  ");
+      console.log("not valid");
     }
-  }
-
-  /*
-
-    When the button is clicked, this is the event that is fired.
-    The first thing we need to do is prevent the default refresh of the page.
-    */
+  };
 
   const validateForm = (event) => {
-    let errorMessage = "";
     const data = new FormData(event.currentTarget);
-    // get the email
     let email = data.get("email");
-    // pull in the validator
-    var validator = require("email-validator");
-    // run the validator
     let emailCheck = validator.validate(email);
-    // print the status true or false
-    console.log("email status" + emailCheck);
+    console.log("email status: " + emailCheck);
+
+    return emailCheck ? "" : "Invalid email address";
   };
+
   const handleSubmit = (event) => {
     console.log("handling submit");
-
     event.preventDefault();
-    // call out custom validator
-    let errorMessage = validateForm(event);
-    // save the mesage
-    setErrorHolder(errorMessage);
-    // if we have an error
-    if (errorMessage.length > 0) {
+
+    setErrorHolder(validateForm(event));
+
+    if (errorHolder.length > 0) {
       setOpen(true);
     } else {
-      // if we do not get an error
       const data = new FormData(event.currentTarget);
       let email = data.get("email");
       let pass = data.get("pass");
@@ -80,8 +63,8 @@ export default function Page() {
       console.log("Sent pass:" + pass);
       console.log("calling db");
       runDBCallAsync(`api/login?email=${email}&pass=${pass}`);
-    } // error message if
-  }; // end handler
+    }
+  };
 
   const theme = createTheme({
     palette: {
@@ -91,16 +74,13 @@ export default function Page() {
     },
   });
 
-  // first
-  const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-  // second
-  const [errorHolder, setErrorHolder] = React.useState(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,10 +115,10 @@ export default function Page() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>{" "}
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
           <Typography component="h1" variant="h5">
             Sign in
-          </Typography>{" "}
+          </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -175,22 +155,21 @@ export default function Page() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In{" "}
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password ?
-                </Link>{" "}
-              </Grid>{" "}
+                  Forgot password?
+                </Link>
+              </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {" "}
-                  {"Don't have an account? Sign Up"}{" "}
-                </Link>{" "}
-              </Grid>{" "}
-            </Grid>{" "}
-          </Box>{" "}
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>
